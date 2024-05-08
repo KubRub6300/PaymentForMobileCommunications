@@ -1,7 +1,7 @@
 package com.smartix.paymentformobilecommunications.service;
 
 import com.smartix.paymentformobilecommunications.config.MyUserDetails;
-import com.smartix.paymentformobilecommunications.controller.InfoMessage;
+import com.smartix.paymentformobilecommunications.dto.InfoDTO;
 import com.smartix.paymentformobilecommunications.dao.PaymentRepository;
 import com.smartix.paymentformobilecommunications.dao.UserRepository;
 import com.smartix.paymentformobilecommunications.dto.UserDTO;
@@ -40,14 +40,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResponseEntity<InfoMessage> paymentMobileCommunication(MyUserDetails myUserDetails, PaymentNumberDTO paymentData) {
+    public ResponseEntity<InfoDTO> paymentMobileCommunication(MyUserDetails myUserDetails, PaymentNumberDTO paymentData) {
         if (paymentData.getAmount() <= 0) {
-            return new ResponseEntity<>(new InfoMessage("Сумма должн быть больше 0!"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoDTO("Сумма должн быть больше 0!"), HttpStatus.BAD_REQUEST);
         }
 
         User user = userRepository.findByLoginFetchPayments(myUserDetails.getUser().getLogin());
 
-        InfoMessage infoMessage = new InfoMessage("");
+        InfoDTO infoDTO = new InfoDTO("");
         HttpStatus httpStatus = HttpStatus.OK;
         double startBalance = user.getBalance();
 
@@ -56,20 +56,20 @@ public class UserServiceImpl implements UserService {
                 Payment payment = new Payment(paymentData.getPhoneNumber(), paymentData.getAmount(), user);
                 user.addPayment(payment);
                 userRepository.save(user);
-                infoMessage.setInfo("Оплата прошла успешно!");
+                infoDTO.setInfo("Оплата прошла успешно!");
             } else {
-                infoMessage.setInfo("Недостаточно средств!");
+                infoDTO.setInfo("Недостаточно средств!");
                 httpStatus = HttpStatus.BAD_REQUEST;
             }
 
         } catch (Exception exception) {
             user.setBalance(startBalance);
-            infoMessage.setInfo("Произошла ошибка! Повтроите попытку позже!");
+            infoDTO.setInfo("Произошла ошибка! Повтроите попытку позже!");
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 
         } finally {
             myUserDetails.setUser(user);
-            return new ResponseEntity(infoMessage, httpStatus);
+            return new ResponseEntity(infoDTO, httpStatus);
         }
     }
 

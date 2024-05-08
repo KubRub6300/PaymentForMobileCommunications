@@ -2,10 +2,7 @@ package com.smartix.paymentformobilecommunications.controller;
 
 
 import com.smartix.paymentformobilecommunications.config.MyUserDetails;
-import com.smartix.paymentformobilecommunications.dto.PaymentResponse;
-import com.smartix.paymentformobilecommunications.dto.UserDTO;
-import com.smartix.paymentformobilecommunications.dto.UserInfoDTO;
-import com.smartix.paymentformobilecommunications.dto.PaymentNumberDTO;
+import com.smartix.paymentformobilecommunications.dto.*;
 import com.smartix.paymentformobilecommunications.entity.User;
 import com.smartix.paymentformobilecommunications.service.PaymentService;
 import com.smartix.paymentformobilecommunications.service.UserService;
@@ -23,6 +20,7 @@ public class MainController {
 
     @Autowired
     PaymentService paymentService;
+
 
 
     @PostMapping(path = "/registration")
@@ -51,9 +49,8 @@ public class MainController {
 
 
     @PostMapping(path = "/payment")
-    public ResponseEntity<InfoMessage> postPayment(@AuthenticationPrincipal MyUserDetails myUserDetails,
-                            @RequestBody PaymentNumberDTO paymentData){
-
+    public ResponseEntity<InfoDTO> postPayment(@AuthenticationPrincipal MyUserDetails myUserDetails,
+                                               @RequestBody PaymentNumberDTO paymentData){
         return userService.paymentMobileCommunication(myUserDetails,paymentData);
     }
 
@@ -67,8 +64,8 @@ public class MainController {
 
 
     @ExceptionHandler
-    public ResponseEntity<InfoMessage> handleException(Exception exception){
-        InfoMessage infoMessage = new InfoMessage(exception.getMessage());
-        return new ResponseEntity<>(infoMessage, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<InfoDTO> handleException(Exception exception){
+        InfoDTO infoDTO = new InfoDTO(exception.getMessage());
+        return new ResponseEntity<>(infoDTO, HttpStatus.BAD_REQUEST);
     }
 }

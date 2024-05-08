@@ -1,9 +1,9 @@
-package com.smartix.paymentformobilecommunications.controller;
+package com.smartix.paymentformobilecommunications.dto;
 
-public class InfoMessage {
+public class InfoDTO {
     private String info;
 
-    public InfoMessage(String info) {
+    public InfoDTO(String info) {
         this.info = info;
     }
 

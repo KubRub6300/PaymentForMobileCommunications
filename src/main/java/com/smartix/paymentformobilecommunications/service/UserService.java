@@ -1,7 +1,7 @@
 package com.smartix.paymentformobilecommunications.service;
 
 import com.smartix.paymentformobilecommunications.config.MyUserDetails;
-import com.smartix.paymentformobilecommunications.controller.InfoMessage;
+import com.smartix.paymentformobilecommunications.dto.InfoDTO;
 import com.smartix.paymentformobilecommunications.dto.UserDTO;
 import com.smartix.paymentformobilecommunications.dto.UserInfoDTO;
 import com.smartix.paymentformobilecommunications.dto.PaymentNumberDTO;
@@ -13,7 +13,7 @@ public interface UserService {
 
     public User addUser(User user);
 
-    public ResponseEntity<InfoMessage> paymentMobileCommunication(MyUserDetails myUserDetails, PaymentNumberDTO paymentData);
+    public ResponseEntity<InfoDTO> paymentMobileCommunication(MyUserDetails myUserDetails, PaymentNumberDTO paymentData);
 
     public UserDTO mapToUserDTO(User user);
 

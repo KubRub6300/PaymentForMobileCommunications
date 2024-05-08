@@ -43,7 +43,6 @@ public class UserInfo {
     }
 
 
-
     public int getId() {
         return id;
     }
