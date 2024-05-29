@@ -34,6 +34,12 @@ public class MainController {
         return userService.mapToUserDTO(myUserDetails.getUser());
     }
 
+    @GetMapping(path = {"/usr"})
+    public User getBalance(@RequestParam(value = "id", required = true) int id,
+                              @AuthenticationPrincipal MyUserDetails myUserDetails) {
+        return userService.getUser(id);
+    }
+
     @GetMapping(path = {"/user"})
     public UserInfoDTO getUser(@AuthenticationPrincipal MyUserDetails myUserDetails){
         User user = myUserDetails.getUser();
@@ -68,4 +74,5 @@ public class MainController {
         InfoDTO infoDTO = new InfoDTO(exception.getMessage());
         return new ResponseEntity<>(infoDTO, HttpStatus.BAD_REQUEST);
     }
+
 }

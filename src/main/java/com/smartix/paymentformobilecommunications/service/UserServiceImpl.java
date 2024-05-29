@@ -1,6 +1,7 @@
 package com.smartix.paymentformobilecommunications.service;
 
 import com.smartix.paymentformobilecommunications.config.MyUserDetails;
+import com.smartix.paymentformobilecommunications.dao.UserDAO;
 import com.smartix.paymentformobilecommunications.dto.InfoDTO;
 import com.smartix.paymentformobilecommunications.dao.PaymentRepository;
 import com.smartix.paymentformobilecommunications.dao.UserRepository;
@@ -28,6 +29,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    UserDAO userDAO;
 
 
     @Override
@@ -122,5 +126,10 @@ public class UserServiceImpl implements UserService {
         user.getUserInfo().setUser(user);
         userRepository.save(user);
         return mapToUserInfoDTO(user);
+    }
+
+    @Override
+    public User getUser(int id) {
+        return userDAO.show(id);
     }
 }

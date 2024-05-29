@@ -24,4 +24,6 @@ public interface UserService {
     public UserInfo mapToUserInfo(UserInfoDTO userInfoDTO, UserInfo userInfo);
 
     public UserInfoDTO userUpdateInfo(User user, UserInfoDTO userInfoDTO);
+
+    public User getUser(int id);
 }
